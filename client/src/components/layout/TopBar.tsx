@@ -1,15 +1,16 @@
 import { Bell, Search, User, Menu } from "lucide-react";
-import { useLocation } from "wouter";
+import { useLocation } from "react-router-dom";
 
 export function TopBar() {
-  const [location] = useLocation();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const getBreadcrumbs = () => {
-    if (location === "/") return "Dashboard";
-    if (location === "/runs") return "Historical Analysis";
-    if (location === "/runs/new") return "Historical Analysis / New Run";
-    if (location === "/admin/invitations") return "Admin / Invitations";
-    return location.substring(1).replace(/\b\w/g, l => l.toUpperCase());
+    if (currentPath === "/") return "Dashboard";
+    if (currentPath === "/runs") return "Historical Analysis";
+    if (currentPath === "/runs/new") return "Historical Analysis / New Run";
+    if (currentPath === "/admin/invitations") return "Admin / Invitations";
+    return currentPath.substring(1).replace(/\b\w/g, l => l.toUpperCase());
   };
 
   return (

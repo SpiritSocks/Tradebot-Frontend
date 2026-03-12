@@ -1,8 +1,9 @@
-import { Link, useLocation } from "wouter";
+import { Link, useLocation } from "react-router-dom";
 import { Activity, LayoutDashboard, Users, PlusCircle, History, Settings } from "lucide-react";
 
 export function Sidebar() {
-  const [location] = useLocation();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const navGroups = [
     {
@@ -40,13 +41,13 @@ export function Sidebar() {
             </div>
             <div className="space-y-1 px-3">
               {group.items.map((item) => {
-                const isActive = location === item.href || (location.startsWith(item.href) && item.href !== "/" && item.href !== "/runs");
+                const isActive = currentPath === item.href || (currentPath.startsWith(item.href) && item.href !== "/" && item.href !== "/runs");
                 
                 // Extra check for /runs vs /runs/new
-                const isExactActive = location === item.href;
+                const isExactActive = currentPath === item.href;
 
                 return (
-                  <Link key={item.href} href={item.href}>
+                  <Link key={item.href} to={item.href}>
                     <div className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 group ${
                       isExactActive || (isActive && item.href !== "/runs")
                         ? "bg-cyan-500/10 text-cyan-400" 

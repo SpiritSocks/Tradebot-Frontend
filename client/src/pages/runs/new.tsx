@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Plus, Trash2, ArrowRight, Settings2 } from "lucide-react";
-import { useLocation } from "wouter";
+import { useNavigate } from "react-router-dom";
 
 export default function NewRun() {
-  const [, setLocation] = useLocation();
+  const navigate = useNavigate();
   const [detectors, setDetectors] = useState([{ id: 1, code: "MA_CROSS", label: "Moving Average" }]);
   const [feesEnabled, setFeesEnabled] = useState(false);
 
@@ -12,7 +12,7 @@ export default function NewRun() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLocation("/runs");
+    navigate("/runs");
   };
 
   return (

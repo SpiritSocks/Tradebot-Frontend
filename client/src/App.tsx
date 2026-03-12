@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -14,26 +14,16 @@ import Invitations from "@/pages/admin/invitations";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
+    <Routes>
+      <Route path="/login" element={<Login />} />
       
-      <Route path="/">
-        <AppLayout><Dashboard /></AppLayout>
-      </Route>
-      <Route path="/runs">
-        <AppLayout><RunsList /></AppLayout>
-      </Route>
-      <Route path="/runs/new">
-        <AppLayout><NewRun /></AppLayout>
-      </Route>
-      <Route path="/admin/invitations">
-        <AppLayout><Invitations /></AppLayout>
-      </Route>
+      <Route path="/" element={<AppLayout><Dashboard /></AppLayout>} />
+      <Route path="/runs" element={<AppLayout><RunsList /></AppLayout>} />
+      <Route path="/runs/new" element={<AppLayout><NewRun /></AppLayout>} />
+      <Route path="/admin/invitations" element={<AppLayout><Invitations /></AppLayout>} />
 
-      <Route>
-        <AppLayout><NotFound /></AppLayout>
-      </Route>
-    </Switch>
+      <Route path="*" element={<AppLayout><NotFound /></AppLayout>} />
+    </Routes>
   );
 }
 
@@ -42,7 +32,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );

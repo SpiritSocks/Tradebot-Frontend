@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { Play, CheckCircle2, Clock, AlertCircle, Plus, Activity, History } from "lucide-react";
 
 const mockRuns = [
@@ -25,7 +25,7 @@ export default function RunsList() {
           <h1 className="text-2xl font-bold text-white tracking-tight">Historical Analysis</h1>
           <p className="text-slate-400 text-sm mt-1">Manage and view your backtesting runs</p>
         </div>
-        <Link href="/runs/new">
+        <Link to="/runs/new">
           <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#0f1117] font-semibold px-4 py-2 rounded-lg transition-colors shadow-[0_0_15px_rgba(34,211,238,0.25)]">
             <Plus className="w-5 h-5" />
             New Run
