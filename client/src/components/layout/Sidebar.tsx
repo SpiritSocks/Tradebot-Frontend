@@ -14,12 +14,6 @@ export function Sidebar() {
       ]
     },
     {
-      title: "ACTIONS",
-      items: [
-        { href: "/runs/new", label: "New Run", icon: PlusCircle },
-      ]
-    },
-    {
       title: "ADMIN",
       items: [
         { href: "/admin/invitations", label: "Invitations", icon: Users },
@@ -62,12 +56,6 @@ export function Sidebar() {
             </div>
           </div>
         ))}
-      </div>
-      <div className="p-4 border-t border-white/5">
-        <div className="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-slate-200 cursor-pointer rounded-lg hover:bg-white/5 transition-colors">
-          <Settings className="w-5 h-5 text-slate-500" />
-          <span className="font-medium text-sm">Settings</span>
-        </div>
       </div>
     </div>
   );

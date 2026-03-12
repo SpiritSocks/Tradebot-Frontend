@@ -17,7 +17,7 @@ const StatusBadge = ({ status }: { status: string }) => {
   }
 };
 
-export default function RunsList() {
+const RunsList = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -63,7 +63,7 @@ export default function RunsList() {
                 <th className="px-6 py-4 font-semibold">Status</th>
                 <th className="px-6 py-4 font-semibold">PnL</th>
                 <th className="px-6 py-4 font-semibold">Trades</th>
-                <th className="px-6 py-4 font-semibold text-right">Action</th>
+                <th className="px-6 py-4 font-semibold">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
@@ -85,8 +85,8 @@ export default function RunsList() {
                   </td>
                   <td className="px-6 py-4 font-medium text-emerald-400">{run.pnl}</td>
                   <td className="px-6 py-4 text-slate-300">{run.trades}</td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <td className="px-6 py-4">
+                    <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium">
                       View Details
                     </button>
                   </td>
@@ -99,3 +99,5 @@ export default function RunsList() {
     </div>
   );
 }
+
+export default RunsList;

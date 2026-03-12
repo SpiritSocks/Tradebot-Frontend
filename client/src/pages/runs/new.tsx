@@ -113,13 +113,6 @@ export default function NewRun() {
               <span className="w-7 h-7 rounded-md bg-amber-500/10 text-amber-400 flex items-center justify-center text-xs border border-amber-500/20">3</span>
               Detectors
             </h2>
-            <button 
-              type="button" 
-              onClick={addDetector}
-              className="text-sm flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg transition-colors"
-            >
-              <Plus className="w-4 h-4" /> Add Detector
-            </button>
           </div>
           
           <div className="space-y-4">

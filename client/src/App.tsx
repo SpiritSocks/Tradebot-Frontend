@@ -8,7 +8,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
-import RunsList from "@/pages/runs";
+import RunsList from "@/pages/runs/runs";
 import NewRun from "@/pages/runs/new";
 import Invitations from "@/pages/admin/invitations";
 
