@@ -6,7 +6,6 @@ import { addMockRun } from "@/lib/mock-data";
 import { useToast } from "@/hooks/use-toast";
 
 export default function NewRun() {
-
   const navigate = useNavigate();
   const { toast } = useToast();
   
@@ -90,7 +89,7 @@ export default function NewRun() {
                 <select 
                   value={exchange}
                   onChange={(e) => setExchange(e.target.value)}
-                  className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
+                  className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
                 >
                   {exchangesData?.exchanges?.map(e => (
                     <option key={e.code} value={e.code}>{e.code}</option>
@@ -103,7 +102,7 @@ export default function NewRun() {
               <select 
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
+                className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
               >
                 {availableCategories.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -122,7 +121,7 @@ export default function NewRun() {
                     onChange={(e) => setSymbol(e.target.value)}
                     placeholder="e.g. BTCUSDT" 
                     list="symbols-list"
-                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 placeholder:text-slate-600 uppercase" 
+                    className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 placeholder:text-slate-600 uppercase" 
                   />
                   <datalist id="symbols-list">
                     {symbolsData?.symbols?.map(s => (
@@ -147,7 +146,7 @@ export default function NewRun() {
               <select 
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
+                className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
               >
                 {availableIntervals.map(inv => (
                   <option key={inv} value={inv}>{inv}{['D','W','M'].includes(inv) ? '' : 'm'}</option>
@@ -159,7 +158,7 @@ export default function NewRun() {
               <select 
                 value={priceType}
                 onChange={(e) => setPriceType(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
+                className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
               >
                 {availablePriceTypes.map(pt => (
                   <option key={pt} value={pt}>
@@ -176,7 +175,7 @@ export default function NewRun() {
               <input 
                 type="datetime-local" 
                 defaultValue="2026-01-01T00:00"
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
+                className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
               />
             </div>
             <div className="space-y-2">
@@ -184,7 +183,7 @@ export default function NewRun() {
               <input 
                 type="datetime-local" 
                 defaultValue="2026-02-01T00:00"
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
+                className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
               />
             </div>
           </div>
@@ -211,7 +210,7 @@ export default function NewRun() {
           ) : (
             <div className="space-y-4">
               {detectors.map((detector, index) => (
-                <div key={detector.id} className="p-5 rounded-xl border border-white/5 bg-background/50 relative group">
+                <div key={detector.id} className="p-5 rounded-xl border border-white/5 bg-[#0b0e14]/50 relative group">
                   {detectors.length > 1 && (
                     <button 
                       type="button" 
@@ -258,11 +257,11 @@ export default function NewRun() {
                         <div className="grid grid-cols-2 gap-4 animate-in fade-in">
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Short Period</label>
-                            <input type="number" defaultValue={9} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={9} className="w-full bg-[#0b0e14] border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Long Period</label>
-                            <input type="number" defaultValue={21} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={21} className="w-full bg-[#0b0e14] border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                         </div>
                       )}
@@ -271,15 +270,15 @@ export default function NewRun() {
                         <div className="grid grid-cols-3 gap-4 animate-in fade-in">
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Period</label>
-                            <input type="number" defaultValue={14} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={14} className="w-full bg-[#0b0e14] border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Overbought</label>
-                            <input type="number" defaultValue={70} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={70} className="w-full bg-[#0b0e14] border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Oversold</label>
-                            <input type="number" defaultValue={30} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={30} className="w-full bg-[#0b0e14] border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                         </div>
                       )}
@@ -319,18 +318,18 @@ export default function NewRun() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 pt-6 border-t border-white/5 animate-in slide-in-from-top-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-slate-300">Maker Fee (%)</label>
-                <input type="number" step="0.01" defaultValue="0.02" className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
+                <input type="number" step="0.01" defaultValue="0.02" className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-slate-300">Taker Fee (%)</label>
-                <input type="number" step="0.01" defaultValue="0.05" className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
+                <input type="number" step="0.01" defaultValue="0.05" className="w-full bg-[#0b0e14] border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
               </div>
             </div>
           )}
         </div>
 
         <div className="flex justify-end pt-4 pb-12">
-          <button type="submit" className="flex items-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]">
+          <button type="submit" className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]">
             Start Analysis Run
             <ArrowRight className="w-5 h-5" />
           </button>
@@ -339,3 +338,4 @@ export default function NewRun() {
     </div>
   );
 }
+
