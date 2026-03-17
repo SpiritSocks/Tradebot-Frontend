@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { Copy, Plus, Users, Calendar, AlertCircle } from "lucide-react";
+import { Copy, Plus, Users, Calendar, AlertCircle, Loader2 } from "lucide-react";
+import { useGenerateInvite } from "@/lib/api-client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Invitations() {
+  const { toast } = useToast();
+  const generateInviteMutation = useGenerateInvite();
+
   const [invites, setInvites] = useState([
     { id: "inv_1", code: "ABCD-EFGH-IJKL", uses: 0, max_uses: 1, expires_at: "2026-04-01", role: "user" },
     { id: "inv_2", code: "XYZ1-2345-ABCD", uses: 5, max_uses: 10, expires_at: "2026-03-15", role: "admin" },
@@ -13,6 +18,36 @@ export default function Invitations() {
     navigator.clipboard.writeText(code);
     setCopied(code);
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleGenerate = async () => {
+    try {
+      const result = await generateInviteMutation.mutateAsync();
+      if (result?.invite_token) {
+        setInvites([{
+          id: `inv_${Date.now()}`,
+          code: result.invite_token,
+          uses: 0,
+          max_uses: 1,
+          expires_at: "30 days",
+          role: "user"
+        }, ...invites]);
+        toast({ title: "Invite generated successfully" });
+      }
+    } catch (err) {
+      console.warn("Backend unavailable, simulating invite generation", err);
+      // Mocking the behavior for the prototype
+      const mockCode = Array.from({length: 3}, () => Math.random().toString(36).substring(2, 6).toUpperCase()).join('-');
+      setInvites([{
+        id: `inv_${Date.now()}`,
+        code: mockCode,
+        uses: 0,
+        max_uses: 1,
+        expires_at: "30 days",
+        role: "user"
+      }, ...invites]);
+      toast({ title: "Mock Invite generated (Backend Unreachable)" });
+    }
   };
 
   return (
@@ -51,8 +86,12 @@ export default function Invitations() {
             </select>
           </div>
           <div className="flex items-end">
-            <button className="w-full bg-cyan-500 hover:bg-cyan-400 text-[#0f1117] font-semibold px-4 py-2.5 rounded-lg transition-colors shadow-[0_0_15px_rgba(34,211,238,0.2)]">
-              Generate Invite
+            <button 
+              onClick={handleGenerate}
+              disabled={generateInviteMutation.isPending}
+              className="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#0f1117] font-semibold px-4 py-2.5 rounded-lg transition-colors shadow-[0_0_15px_rgba(34,211,238,0.2)] disabled:opacity-50"
+            >
+              {generateInviteMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Generate Invite'}
             </button>
           </div>
         </div>

@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
 import { Play, CheckCircle2, Clock, AlertCircle, Plus, Activity, History } from "lucide-react";
-
-const mockRuns = [
-  { id: "run_8f72a", created_at: "2026-03-09 10:23", market: "BINANCE / SPOT / BTCUSDT", interval: "15m", period: "2025-01-01 to 2026-01-01", status: "done", pnl: "+14.5%", trades: 142 },
-  { id: "run_3b91c", created_at: "2026-03-09 09:15", market: "BYBIT / LINEAR / ETHUSDT", interval: "1h", period: "2025-06-01 to 2026-01-01", status: "running", pnl: "...", trades: "..." },
-  { id: "run_1a44e", created_at: "2026-03-08 18:40", market: "OKX / SPOT / SOLUSDT", interval: "5m", period: "2025-10-01 to 2026-01-01", status: "failed", pnl: "-", trades: "-" },
-  { id: "run_9c22d", created_at: "2026-03-08 14:20", market: "BINANCE / SPOT / BTCUSDT", interval: "1d", period: "2020-01-01 to 2026-01-01", status: "done", pnl: "+125.2%", trades: 843 },
-];
+import { useState, useEffect } from "react";
+import { getMockRuns } from "@/lib/mock-data.ts";
 
 const StatusBadge = ({ status }: { status: string }) => {
   switch (status) {
@@ -17,7 +12,13 @@ const StatusBadge = ({ status }: { status: string }) => {
   }
 };
 
-const RunsList = () => {
+export default function RunsList() {
+  const [runs, setRuns] = useState<any[]>([]);
+
+  useEffect(() => {
+    setRuns(getMockRuns());
+  }, []);
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -25,11 +26,9 @@ const RunsList = () => {
           <h1 className="text-2xl font-bold text-white tracking-tight">Historical Analysis</h1>
           <p className="text-slate-400 text-sm mt-1">Manage and view your backtesting runs</p>
         </div>
-        <Link to="/runs/new">
-          <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#0f1117] font-semibold px-4 py-2 rounded-lg transition-colors shadow-[0_0_15px_rgba(34,211,238,0.25)]">
-            <Plus className="w-5 h-5" />
-            New Run
-          </button>
+        <Link to="/runs/new" className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#0f1117] font-semibold px-4 py-2 rounded-lg transition-colors shadow-[0_0_15px_rgba(34,211,238,0.25)]">
+          <Plus className="w-5 h-5" />
+          New Run
         </Link>
       </div>
 
@@ -63,16 +62,18 @@ const RunsList = () => {
                 <th className="px-6 py-4 font-semibold">Status</th>
                 <th className="px-6 py-4 font-semibold">PnL</th>
                 <th className="px-6 py-4 font-semibold">Trades</th>
-                <th className="px-6 py-4 font-semibold">Action</th>
+                <th className="px-6 py-4 font-semibold text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {mockRuns.map((run) => (
+              {runs.map((run) => (
                 <tr key={run.id} className="hover:bg-white/[0.02] transition-colors group">
                   <td className="px-6 py-4 font-mono text-cyan-400/80 text-xs">{run.id}</td>
                   <td className="px-6 py-4">
-                    <div className="font-medium text-slate-200">{run.market.split(' / ')[2]}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">{run.market.split(' / ')[0]} · {run.market.split(' / ')[1]}</div>
+                    <div className="font-medium text-slate-200">{run.market?.split(' / ')[2] || run.market}</div>
+                    {run.market?.includes(' / ') && (
+                      <div className="text-xs text-slate-500 mt-0.5">{run.market.split(' / ')[0]} · {run.market.split(' / ')[1]}</div>
+                    )}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2 mb-1">
@@ -85,8 +86,8 @@ const RunsList = () => {
                   </td>
                   <td className="px-6 py-4 font-medium text-emerald-400">{run.pnl}</td>
                   <td className="px-6 py-4 text-slate-300">{run.trades}</td>
-                  <td className="px-6 py-4">
-                    <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium">
+                  <td className="px-6 py-4 text-right">
+                    <button className="text-cyan-400 hover:text-cyan-300 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                       View Details
                     </button>
                   </td>
@@ -99,5 +100,3 @@ const RunsList = () => {
     </div>
   );
 }
-
-export default RunsList;

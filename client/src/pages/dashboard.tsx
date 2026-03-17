@@ -1,6 +1,6 @@
 import { Activity, Server, Cpu, Clock, HardDrive, Shield } from "lucide-react";
 
-const Dashboard = () => {
+export default function Dashboard() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-7xl mx-auto">
       <div>
@@ -87,5 +87,3 @@ const Dashboard = () => {
     </div>
   );
 }
-
-export default Dashboard;

@@ -1,38 +1,37 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Activity, Lock, Mail, ArrowRight, Loader2 } from "lucide-react";
-import { useLogin } from "@/lib/api-client";
+import { Activity, Lock, Mail, ArrowRight, Loader2, Key } from "lucide-react";
+import { useRegister } from "@/lib/api-client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth";
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [inviteToken, setInviteToken] = useState("");
   
-  const loginMutation = useLogin();
+  const registerMutation = useRegister();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // In mockup mode with no backend, this will fail. We'll catch it and mock success.
-      await loginMutation.mutateAsync({ email, password });
+      await registerMutation.mutateAsync({ email, password, invite_token: inviteToken });
       login();
-      toast({ title: "Login Successful" });
+      toast({ title: "Account created successfully" });
       navigate("/dashboard");
     } catch (error) {
-      console.warn("Backend unavailable, simulating successful login for mockup", error);
+      console.warn("Backend unavailable, simulating successful signup for mockup", error);
       login();
-      toast({ title: "Mock Login Successful (Backend Unreachable)" });
+      toast({ title: "Mock Account Created (Backend Unreachable)" });
       navigate("/dashboard");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#0b0e14] flex items-center justify-center p-4">
-      {/* Background decorations */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -43,10 +42,10 @@ export default function Login() {
             TradeBot
           </div>
 
-          <h1 className="text-xl font-semibold text-white mb-2 text-center">Welcome Back</h1>
-          <p className="text-slate-400 text-sm text-center mb-8">Sign in to access your historical analysis panel</p>
+          <h1 className="text-xl font-semibold text-white mb-2 text-center">Create Account</h1>
+          <p className="text-slate-400 text-sm text-center mb-8">Sign up using your invitation code</p>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleSignup} className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
               <div className="relative">
@@ -54,7 +53,7 @@ export default function Login() {
                 <input 
                   type="email" 
                   required
-                  placeholder="admin@tradebot.local"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
@@ -63,10 +62,7 @@ export default function Login() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between ml-1">
-                <label className="text-sm font-medium text-slate-300">Password</label>
-                <a href="#" className="text-xs text-cyan-500 hover:text-cyan-400">Forgot password?</a>
-              </div>
+              <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
               <div className="relative">
                 <Lock className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input 
@@ -80,17 +76,32 @@ export default function Login() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-300 ml-1">Invitation Code</label>
+              <div className="relative">
+                <Key className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <input 
+                  type="text" 
+                  required
+                  placeholder="ABCD-EFGH-IJKL"
+                  value={inviteToken}
+                  onChange={e => setInviteToken(e.target.value)}
+                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600 font-mono"
+                />
+              </div>
+            </div>
+
             <button 
               type="submit" 
-              disabled={loginMutation.isPending}
+              disabled={registerMutation.isPending}
               className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] mt-4 disabled:opacity-50"
             >
-              {loginMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Sign In <ArrowRight className="w-4 h-4" /></>}
+              {registerMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Create Account <ArrowRight className="w-4 h-4" /></>}
             </button>
           </form>
 
           <div className="mt-8 text-center text-sm text-slate-500">
-            Need an account? <a href="/signup" className="text-cyan-500 hover:text-cyan-400 transition-colors">Use invitation code</a>
+            Already have an account? <a href="/login" className="text-cyan-500 hover:text-cyan-400 transition-colors">Sign in</a>
           </div>
         </div>
       </div>
