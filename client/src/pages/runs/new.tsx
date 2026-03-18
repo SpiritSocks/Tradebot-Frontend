@@ -5,12 +5,11 @@ import { useExchanges, useSymbols, useDetectors } from "@/lib/api-client";
 import { addMockRun } from "@/lib/mock-data";
 import { useToast } from "@/hooks/use-toast";
 
-export default function NewRun() {
+const NewRun = () => {
 
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  // Form State
   const [exchange, setExchange] = useState("bybit");
   const [category, setCategory] = useState("linear");
   const [symbol, setSymbol] = useState("BTCUSDT");
@@ -20,18 +19,18 @@ export default function NewRun() {
   
   const [detectors, setDetectorsList] = useState([{ id: 1, code: "MA_CROSS", label: "Moving Average" }]);
 
-  // API Queries
+  // API-запросы
   const { data: exchangesData, isLoading: loadingExchanges } = useExchanges();
   const { data: symbolsData, isLoading: loadingSymbols } = useSymbols(exchange, category);
   const { data: detectorsData, isLoading: loadingDetectors } = useDetectors();
 
-  // Derived options
+  // Производные параметры
   const currentExchangeObj = exchangesData?.exchanges?.find(e => e.code === exchange);
   const availableCategories = currentExchangeObj?.categories || ["linear", "spot"];
   const availableIntervals = currentExchangeObj?.intervals || ["1", "5", "15", "60", "D"];
   const availablePriceTypes = currentExchangeObj?.price_types || ["0", "1", "2", "3"];
 
-  // Ensure category and interval are valid when exchange changes
+  // Проверка, что категория и интервал корректны при смене биржи
   useEffect(() => {
     if (currentExchangeObj && !availableCategories.includes(category)) {
       setCategory(availableCategories[0] || "linear");
@@ -50,7 +49,7 @@ export default function NewRun() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Add mock run
+    // Добавить моковый запуск
     const newRun = {
       id: `run_${Math.random().toString(36).substring(2, 7)}`,
       created_at: new Date().toISOString().slice(0, 16).replace('T', ' '),
@@ -75,7 +74,6 @@ export default function NewRun() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Market Section */}
         <div className="bg-[#151822] border border-white/5 rounded-xl p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-white flex items-center gap-3 mb-6">
             <span className="w-7 h-7 rounded-md bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xs border border-cyan-500/20">1</span>
@@ -90,7 +88,8 @@ export default function NewRun() {
                 <select 
                   value={exchange}
                   onChange={(e) => setExchange(e.target.value)}
-                  className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
+                  className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                  focus:border-cyan-500/50 appearance-none capitalize"
                 >
                   {exchangesData?.exchanges?.map(e => (
                     <option key={e.code} value={e.code}>{e.code}</option>
@@ -103,7 +102,8 @@ export default function NewRun() {
               <select 
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 appearance-none capitalize"
+                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                focus:border-cyan-500/50 appearance-none capitalize"
               >
                 {availableCategories.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -122,7 +122,8 @@ export default function NewRun() {
                     onChange={(e) => setSymbol(e.target.value)}
                     placeholder="e.g. BTCUSDT" 
                     list="symbols-list"
-                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50 placeholder:text-slate-600 uppercase" 
+                    className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                    focus:border-cyan-500/50 placeholder:text-slate-600 uppercase" 
                   />
                   <datalist id="symbols-list">
                     {symbolsData?.symbols?.map(s => (
@@ -135,10 +136,10 @@ export default function NewRun() {
           </div>
         </div>
 
-        {/* Data Parameters */}
         <div className="bg-[#151822] border border-white/5 rounded-xl p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-white flex items-center gap-3 mb-6">
-            <span className="w-7 h-7 rounded-md bg-purple-500/10 text-purple-400 flex items-center justify-center text-xs border border-purple-500/20">2</span>
+            <span className="w-7 h-7 rounded-md bg-purple-500/10 text-purple-400 flex items-center justify-center text-xs border 
+            border-purple-500/20">2</span>
             Data Parameters
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
@@ -147,7 +148,8 @@ export default function NewRun() {
               <select 
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
+                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                focus:border-purple-500/50 appearance-none"
               >
                 {availableIntervals.map(inv => (
                   <option key={inv} value={inv}>{inv}{['D','W','M'].includes(inv) ? '' : 'm'}</option>
@@ -159,7 +161,8 @@ export default function NewRun() {
               <select 
                 value={priceType}
                 onChange={(e) => setPriceType(e.target.value)}
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 appearance-none"
+                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                focus:border-purple-500/50 appearance-none"
               >
                 {availablePriceTypes.map(pt => (
                   <option key={pt} value={pt}>
@@ -176,7 +179,8 @@ export default function NewRun() {
               <input 
                 type="datetime-local" 
                 defaultValue="2026-01-01T00:00"
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
+                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                focus:border-purple-500/50 scheme-dark" 
               />
             </div>
             <div className="space-y-2">
@@ -184,23 +188,25 @@ export default function NewRun() {
               <input 
                 type="datetime-local" 
                 defaultValue="2026-02-01T00:00"
-                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-purple-500/50 [color-scheme:dark]" 
+                className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none 
+                focus:border-purple-500/50 scheme-dark" 
               />
             </div>
           </div>
         </div>
 
-        {/* Detectors */}
         <div className="bg-[#151822] border border-white/5 rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-semibold text-white flex items-center gap-3">
-              <span className="w-7 h-7 rounded-md bg-amber-500/10 text-amber-400 flex items-center justify-center text-xs border border-amber-500/20">3</span>
+              <span className="w-7 h-7 rounded-md bg-amber-500/10 text-amber-400 flex items-center justify-center text-xs border
+              border-amber-500/20">3</span>
               Detectors
             </h2>
             <button 
               type="button" 
               onClick={addDetector}
-              className="text-sm flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-400/10 border border-amber-400/20 px-3 py-1.5 rounded-lg transition-colors"
+              className="text-sm flex items-center gap-1.5 text-amber-400 hover:text-amber-300 bg-amber-400/10 border 
+              border-amber-400/20 px-3 py-1.5 rounded-lg transition-colors"
             >
               <Plus className="w-4 h-4" /> Add Detector
             </button>
@@ -216,7 +222,8 @@ export default function NewRun() {
                     <button 
                       type="button" 
                       onClick={() => removeDetector(detector.id)}
-                      className="absolute top-4 right-4 text-slate-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity bg-white/5 p-1.5 rounded-md"
+                      className="absolute top-4 right-4 text-slate-500 hover:text-rose-400 opacity-0 group-hover:opacity-100 
+                      transition-opacity bg-white/5 p-1.5 rounded-md"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -227,7 +234,8 @@ export default function NewRun() {
                       <select 
                         value={detector.code}
                         onChange={(e) => updateDetector(detector.id, "code", e.target.value)}
-                        className="w-full bg-[#151822] border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500/50 appearance-none"
+                        className="w-full bg-[#151822] border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 
+                        focus:outline-none focus:border-amber-500/50 appearance-none"
                       >
                         <option value="" disabled>Select a detector...</option>
                         {detectorsData?.detectors?.map(d => (
@@ -242,7 +250,8 @@ export default function NewRun() {
                         value={detector.label}
                         onChange={(e) => updateDetector(detector.id, "label", e.target.value)}
                         placeholder="e.g. primary_ma" 
-                        className="w-full bg-[#151822] border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-amber-500/50 placeholder:text-slate-600" 
+                        className="w-full bg-[#151822] border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 
+                        focus:outline-none focus:border-amber-500/50 placeholder:text-slate-600" 
                       />
                     </div>
                   </div>
@@ -253,16 +262,17 @@ export default function NewRun() {
                         <Settings2 className="w-3.5 h-3.5" /> Configuration Options
                       </div>
                       
-                      {/* Dynamic form mockup based on opts_schema could go here. For now, simple fallback */}
                       {detector.code === "MA_CROSS" && (
                         <div className="grid grid-cols-2 gap-4 animate-in fade-in">
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Short Period</label>
-                            <input type="number" defaultValue={9} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={9} className="w-full bg-background border border-white/5 rounded-md 
+                            px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Long Period</label>
-                            <input type="number" defaultValue={21} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={21} className="w-full bg-background border border-white/5 rounded-md 
+                            px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                         </div>
                       )}
@@ -271,15 +281,18 @@ export default function NewRun() {
                         <div className="grid grid-cols-3 gap-4 animate-in fade-in">
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Period</label>
-                            <input type="number" defaultValue={14} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={14} className="w-full bg-background border border-white/5 rounded-md 
+                            px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Overbought</label>
-                            <input type="number" defaultValue={70} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={70} className="w-full bg-background border border-white/5 rounded-md
+                            px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                           <div>
                             <label className="text-xs text-slate-500 mb-1.5 block">Oversold</label>
-                            <input type="number" defaultValue={30} className="w-full bg-background border border-white/5 rounded-md px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
+                            <input type="number" defaultValue={30} className="w-full bg-background border border-white/5 rounded-md 
+                            px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-amber-500/50" />
                           </div>
                         </div>
                       )}
@@ -293,7 +306,7 @@ export default function NewRun() {
               ))}
               
               {detectors.length === 0 && (
-                <div className="text-center py-8 text-slate-500 border border-dashed border-white/10 rounded-xl bg-white/[0.01]">
+                <div className="text-center py-8 text-slate-500 border border-dashed border-white/10 rounded-xl bg-white/1">
                   No detectors added. Add at least one detector to continue.
                 </div>
               )}
@@ -301,7 +314,6 @@ export default function NewRun() {
           )}
         </div>
 
-        {/* Fees (Optional) */}
         <div className="bg-[#151822] border border-white/5 rounded-xl p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-white">Trading Fees</h2>
@@ -309,7 +321,8 @@ export default function NewRun() {
               <div className="relative">
                 <input type="checkbox" className="sr-only" checked={feesEnabled} onChange={(e) => setFeesEnabled(e.target.checked)} />
                 <div className={`block w-10 h-6 rounded-full transition-colors ${feesEnabled ? 'bg-cyan-500' : 'bg-white/10'}`}></div>
-                <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${feesEnabled ? 'transform translate-x-4' : ''}`}></div>
+                <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${feesEnabled ? 
+                  'transform translate-x-4' : ''}`}></div>
               </div>
               <span className="ml-3 text-sm font-medium text-slate-300">Enable custom fees</span>
             </label>
@@ -319,18 +332,22 @@ export default function NewRun() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6 pt-6 border-t border-white/5 animate-in slide-in-from-top-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-slate-300">Maker Fee (%)</label>
-                <input type="number" step="0.01" defaultValue="0.02" className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
+                <input type="number" step="0.01" defaultValue="0.02" className="w-full bg-background border border-white/10 
+                rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-slate-300">Taker Fee (%)</label>
-                <input type="number" step="0.01" defaultValue="0.05" className="w-full bg-background border border-white/10 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
+                <input type="number" step="0.01" defaultValue="0.05" className="w-full bg-background border border-white/10 
+                rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-cyan-500/50" />
               </div>
             </div>
           )}
         </div>
 
         <div className="flex justify-end pt-4 pb-12">
-          <button type="submit" className="flex items-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]">
+          <button type="submit" className="flex items-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 
+          hover:to-blue-500 text-white font-semibold px-8 py-3 rounded-lg transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)] 
+          hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]">
             Start Analysis Run
             <ArrowRight className="w-5 h-5" />
           </button>
@@ -339,3 +356,5 @@ export default function NewRun() {
     </div>
   );
 }
+
+export default NewRun;

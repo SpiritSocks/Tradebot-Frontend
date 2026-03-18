@@ -3,11 +3,11 @@ import { Activity, ArrowRight } from "lucide-react";
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[#0b0e14] flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto space-y-8 animate-in fade-in zoom-in duration-700">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-cyan-500/10 
+      rounded-full blur-[120px] pointer-events-none" />
+      <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto space-y-8 animate-in 
+      fade-in zoom-in duration-700">
         <div className="flex items-center justify-center gap-3 text-cyan-400 font-bold text-4xl tracking-wide">
           <Activity className="w-12 h-12" />
           TradeBot
@@ -15,7 +15,7 @@ export default function Landing() {
 
         <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
           Advanced Historical <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-blue-500">
             Market Analysis
           </span>
         </h1>
@@ -28,7 +28,7 @@ export default function Landing() {
 
         <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
           <Link to="/login">
-            <button className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
+            <button className="flex items-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(34,211,238,0.4)]">
               Sign In to Workspace <ArrowRight className="w-5 h-5" />
             </button>
           </Link>

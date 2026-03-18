@@ -31,7 +31,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0e14] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -56,7 +56,7 @@ export default function Signup() {
                   placeholder="name@example.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
+                  className="w-full bg-background border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
                 />
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function Signup() {
                   placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
+                  className="w-full bg-background border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
                 />
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function Signup() {
                   placeholder="ABCD-EFGH-IJKL"
                   value={inviteToken}
                   onChange={e => setInviteToken(e.target.value)}
-                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600 font-mono"
+                  className="w-full bg-background border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600 font-mono"
                 />
               </div>
             </div>
@@ -94,7 +94,9 @@ export default function Signup() {
             <button 
               type="submit" 
               disabled={registerMutation.isPending}
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] mt-4 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600
+               hover:from-cyan-400 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all 
+               shadow-[0_0_20px_rgba(34,211,238,0.2)] mt-4 disabled:opacity-50"
             >
               {registerMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Create Account <ArrowRight className="w-4 h-4" /></>}
             </button>

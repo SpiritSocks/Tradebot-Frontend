@@ -12,7 +12,7 @@ const StatusBadge = ({ status }: { status: string }) => {
   }
 };
 
-export default function RunsList() {
+const RunsList = () => {
   const [runs, setRuns] = useState<any[]>([]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function RunsList() {
             </thead>
             <tbody className="divide-y divide-white/5">
               {runs.map((run) => (
-                <tr key={run.id} className="hover:bg-white/[0.02] transition-colors group">
+                <tr key={run.id} className="hover:bg-white/2 transition-colors group">
                   <td className="px-6 py-4 font-mono text-cyan-400/80 text-xs">{run.id}</td>
                   <td className="px-6 py-4">
                     <div className="font-medium text-slate-200">{run.market?.split(' / ')[2] || run.market}</div>
@@ -100,3 +100,5 @@ export default function RunsList() {
     </div>
   );
 }
+
+export default RunsList;

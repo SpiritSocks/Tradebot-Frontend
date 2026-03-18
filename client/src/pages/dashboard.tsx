@@ -17,7 +17,7 @@ export default function Dashboard() {
             { label: "Average CPU", value: "2.6%", icon: Cpu },
             { label: "Heaviest Process", value: "Jobs-0", icon: Shield },
           ].map((stat, i) => (
-            <div key={i} className="bg-[#151822] border border-white/5 rounded-xl p-5 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+            <div key={i} className="bg-[#151822] border border-white/5 rounded-xl p-5 flex items-center justify-between hover:bg-white/2 transition-colors">
               <div>
                 <div className="text-xs font-medium text-slate-400 mb-1">{stat.label}</div>
                 <div className="text-xl font-bold text-slate-200">{stat.value}</div>
@@ -38,7 +38,7 @@ export default function Dashboard() {
             { label: "Scheduler-0", sub: "2.6% / 171.69 MiB", icon: Clock, color: "text-emerald-400", bg: "bg-emerald-400/10" },
             { label: "Jobs-0", sub: "5.1% / 181.55 MiB", icon: Activity, color: "text-amber-400", bg: "bg-amber-400/10" },
           ].map((stat, i) => (
-            <div key={i} className="bg-[#151822] border border-white/5 rounded-xl p-5 flex items-center gap-4 hover:bg-white/[0.02] transition-colors">
+            <div key={i} className="bg-[#151822] border border-white/5 rounded-xl p-5 flex items-center gap-4 hover:bg-white/2 transition-colors">
               <div className={`p-3 rounded-lg ${stat.bg}`}>
                 <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
@@ -54,7 +54,7 @@ export default function Dashboard() {
       <div className="space-y-4">
         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Historical Data Cache</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           <div className="bg-[#151822] border border-white/5 rounded-xl p-6 hover:bg-white/[0.02] transition-colors">
+           <div className="bg-[#151822] border border-white/5 rounded-xl p-6 hover:bg-white/2 transition-colors">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <div className="text-sm font-medium text-slate-400 mb-2">Today's Data Pull</div>
@@ -68,7 +68,7 @@ export default function Dashboard() {
                 </div>
               </div>
            </div>
-           <div className="bg-[#151822] border border-white/5 rounded-xl p-6 hover:bg-white/[0.02] transition-colors">
+           <div className="bg-[#151822] border border-white/5 rounded-xl p-6 hover:bg-white/2 transition-colors">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <div className="text-sm font-medium text-slate-400 mb-2">Last 7 Days</div>

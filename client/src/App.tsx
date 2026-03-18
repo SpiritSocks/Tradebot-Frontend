@@ -17,7 +17,7 @@ import Invitations from "@/pages/admin/invitations";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isLoggedIn } = useAuth();
-  
+
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;
   }
@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-function Router() {
+const Router = () => {
   const { isLoggedIn } = useAuth();
 
   return (
@@ -43,8 +43,7 @@ function Router() {
     </Routes>
   );
 }
-
-function App() {
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>

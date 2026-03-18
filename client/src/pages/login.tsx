@@ -17,7 +17,6 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // In mockup mode with no backend, this will fail. We'll catch it and mock success.
       await loginMutation.mutateAsync({ email, password });
       login();
       toast({ title: "Login Successful" });
@@ -31,12 +30,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0e14] flex items-center justify-center p-4">
-      {/* Background decorations */}
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="w-full max-w-md bg-[#151822]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl relative z-10 overflow-hidden">
+      <div className="w-full max-w-md bg-[#151822]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl 
+      srelative z-10 overflow-hidden">
         <div className="p-8">
           <div className="flex items-center justify-center gap-3 text-cyan-400 font-bold text-2xl tracking-wide mb-8">
             <Activity className="w-8 h-8" />
@@ -57,7 +56,8 @@ export default function Login() {
                   placeholder="admin@tradebot.local"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
+                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none
+                   focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
                 />
               </div>
             </div>
@@ -75,7 +75,8 @@ export default function Login() {
                   placeholder="••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-[#0b0e14] border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
+                  className="w-full bg-background border border-white/10 rounded-xl pl-10 pr-4 py-3 text-slate-200 focus:outline-none 
+                  focus:border-cyan-500/50 transition-colors placeholder:text-slate-600"
                 />
               </div>
             </div>
@@ -83,7 +84,9 @@ export default function Login() {
             <button 
               type="submit" 
               disabled={loginMutation.isPending}
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] mt-4 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 
+              hover:to-blue-500 text-white font-semibold py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] mt-4 
+              disabled:opacity-50"
             >
               {loginMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Sign In <ArrowRight className="w-4 h-4" /></>}
             </button>
