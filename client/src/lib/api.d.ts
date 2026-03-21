@@ -1,5 +1,3 @@
-
-
 export interface paths {
     "/auth/register": {
         parameters: {
@@ -390,6 +388,168 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start analysis run */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["StartRunRequest"];
+                };
+            };
+            responses: {
+                /** @description Run started */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StartRunResponse"];
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
+                422: components["responses"]["InvalidInput"];
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/runs/{run_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get run status */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    run_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Current run status */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RunStatusResponse"];
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
+                404: components["responses"]["NotFound"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/runs/{run_id}/meta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get run metadata */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    run_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Run metadata */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RunMetaResponse"];
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
+                404: components["responses"]["NotFound"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/runs/{run_id}/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download run result archive */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    run_id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description ZIP archive with run result */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/zip": string;
+                    };
+                };
+                401: components["responses"]["Unauthorized"];
+                404: components["responses"]["NotFound"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -397,7 +557,7 @@ export interface components {
         ErrorResponse: {
             /** @example invalid_input */
             error?: string;
-            /** @example Email is required */
+            /** @example Field is required */
             message?: string;
         };
         RegisterRequest: {
@@ -453,7 +613,59 @@ export interface components {
             code?: string;
             description?: string;
             kind?: string;
-            opts_schema?: Record<string, never>;
+            opts_schema?: Record<string, unknown>;
+        };
+        MarketSpec: {
+            exchange: string;
+            category: string;
+            symbol: string;
+        };
+        DetectorConfig: {
+            code: string;
+            label?: string;
+            opts?: Record<string, unknown>;
+        };
+        Fees: {
+            /** @example 0.0005 */
+            taker_fee?: number;
+            /** @example 0.0001 */
+            maker_fee?: number;
+        };
+        StartRunRequest: {
+            market: components["schemas"]["MarketSpec"];
+            /** @example 1h */
+            interval: string;
+            /** Format: date-time */
+            from_time: string;
+            /** Format: date-time */
+            to_time: string;
+            /** @example mark */
+            price_type: string;
+            detector: components["schemas"]["DetectorConfig"];
+            fees?: components["schemas"]["Fees"];
+        };
+        StartRunResponse: {
+            run_id?: string;
+        };
+        RunStatusResponse: {
+            /** @example running */
+            status?: string;
+            message?: string;
+        };
+        RunMetaResponse: {
+            id?: string;
+            market?: components["schemas"]["MarketSpec"];
+            interval?: string;
+            detector?: components["schemas"]["DetectorConfig"];
+            /** Format: date-time */
+            from_time?: string;
+            /** Format: date-time */
+            to_time?: string;
+            signals_count?: string;
+            /** Format: float */
+            avg_profit?: number;
+            /** Format: date-time */
+            created_at?: string;
         };
     };
     responses: {
@@ -468,6 +680,15 @@ export interface components {
         };
         /** @description Invalid input */
         InvalidInput: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+            };
+        };
+        /** @description Resource not found */
+        NotFound: {
             headers: {
                 [name: string]: unknown;
             };

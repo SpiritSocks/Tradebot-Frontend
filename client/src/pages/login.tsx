@@ -17,15 +17,16 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await loginMutation.mutateAsync({ email, password });
-      login();
-      toast({ title: "Login Successful" });
-      navigate("/dashboard");
+      const data = await loginMutation.mutateAsync({ email, password });
+      if (data?.access_token && data?.refresh_token) {
+        login(data.access_token, data.refresh_token);
+        toast({ title: "Login Successful" });
+        navigate("/dashboard");
+      } else {
+        toast({ title: "Login failed", description: "No tokens received" });
+      }
     } catch (error) {
-      console.warn("Backend unavailable, simulating successful login for mockup", error);
-      login();
-      toast({ title: "Mock Login Successful (Backend Unreachable)" });
-      navigate("/dashboard");
+      toast({ title: "Login failed", description: String(error) });
     }
   };
 

@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Activity, Lock, Mail, ArrowRight, Loader2, Key } from "lucide-react";
 import { useRegister } from "@/lib/api-client";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/lib/auth";
 
 export default function Signup() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inviteToken, setInviteToken] = useState("");
@@ -19,14 +17,10 @@ export default function Signup() {
     e.preventDefault();
     try {
       await registerMutation.mutateAsync({ email, password, invite_token: inviteToken });
-      login();
-      toast({ title: "Account created successfully" });
-      navigate("/dashboard");
+      toast({ title: "Account created successfully", description: "Please sign in" });
+      navigate("/login");
     } catch (error) {
-      console.warn("Backend unavailable, simulating successful signup for mockup", error);
-      login();
-      toast({ title: "Mock Account Created (Backend Unreachable)" });
-      navigate("/dashboard");
+      toast({ title: "Registration failed", description: String(error) });
     }
   };
 
