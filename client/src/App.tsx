@@ -14,6 +14,7 @@ import Dashboard from "@/pages/dashboard";
 import RunsList from "@/pages/runs/runs";
 import NewRun from "@/pages/runs/new";
 import Invitations from "@/pages/admin/invitations";
+import VerifyEmail from "@/pages/verify-email";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isLoggedIn } = useAuth();
@@ -33,6 +34,7 @@ const Router = () => {
       <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Landing />} />
       <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Login />} />
       <Route path="/signup" element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Signup />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
       
       <Route path="/dashboard" element={<ProtectedRoute><AppLayout><Dashboard /></AppLayout></ProtectedRoute>} />
       <Route path="/runs" element={<ProtectedRoute><AppLayout><RunsList /></AppLayout></ProtectedRoute>} />

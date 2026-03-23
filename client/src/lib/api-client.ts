@@ -2,7 +2,9 @@ import createClient, { type Middleware } from "openapi-fetch";
 import type { paths } from "./api";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-export const apiClient = createClient<paths>({ baseUrl: "http://193.23.219.143:8080" });
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+
+export const apiClient = createClient<paths>({ baseUrl: API_BASE_URL });
 
 // Middleware: подставляет Bearer token из localStorage в каждый запрос
 const authMiddleware: Middleware = {
@@ -101,6 +103,35 @@ export function useGenerateInvite() {
   });
 }
 
+export function useVerifyEmail() {
+  return useMutation({
+    mutationFn: async (token: string) => {
+      const { error } = await apiClient.GET("/auth/verify", {
+        params: { query: { token } }
+      });
+      if (error) throw new Error(error.message || "Email verification failed");
+    }
+  });
+}
+
+export function useLogout() {
+  return useMutation({
+    mutationFn: async () => {
+      const { error } = await apiClient.POST("/auth/logout");
+      if (error) throw new Error(error.message || "Logout failed");
+    }
+  });
+}
+
+export function useLogoutAll() {
+  return useMutation({
+    mutationFn: async () => {
+      const { error } = await apiClient.POST("/auth/logout-all");
+      if (error) throw new Error(error.message || "Logout all failed");
+    }
+  });
+}
+
 // ── Market ──
 
 export function useExchanges() {
@@ -142,6 +173,19 @@ export function useDetectors() {
 }
 
 // ── Runs ──
+
+export function useListRuns(params?: { limit?: number; before_id?: number }) {
+  return useQuery({
+    queryKey: ["runs", params?.limit, params?.before_id],
+    queryFn: async () => {
+      const { data, error } = await apiClient.GET("/runs", {
+        params: { query: params }
+      });
+      if (error) throw new Error(error.message || "Failed to fetch runs");
+      return data;
+    }
+  });
+}
 
 export function useStartRun() {
   return useMutation({
@@ -186,7 +230,7 @@ export function useRunMeta(runId: string) {
 
 export async function downloadRunResult(runId: string) {
   const token = localStorage.getItem("access_token");
-  const res = await fetch(`http://193.23.219.143:8080/runs/${encodeURIComponent(runId)}/result`, {
+  const res = await fetch(`${API_BASE_URL}/runs/${encodeURIComponent(runId)}/result`, {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   if (!res.ok) throw new Error("Failed to download run result");
