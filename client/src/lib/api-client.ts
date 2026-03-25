@@ -2,7 +2,7 @@ import createClient, { type Middleware } from "openapi-fetch";
 import type { paths } from "./api";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const apiClient = createClient<paths>({ baseUrl: API_BASE_URL });
 
